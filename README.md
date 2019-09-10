@@ -14,7 +14,7 @@ The authors welcome contributions to this book! Read the [Guide to Contributing]
 
 ## Source and license
 
-Mastering the Lightning Network is released under the Creative Commons CC-BY-NC-ND license, which allows sharing the source code for personal use only. You may read this book for free. You may not create derivatives (such as PDF copies), or distribute the book commercially. The full terms of the license can be found here:
+Mastering the Lightning Network is released under the Creative Commons CC-BY-NC-ND license, which allows sharing the source code for personal use only. You may read this book at no cost. You may not create derivatives (such as PDF copies), or distribute the book commercially. The full terms of the license can be found here:
 
 [![Creative Commons License](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 

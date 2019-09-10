@@ -5,9 +5,11 @@ addons:
     packages:
     - python3-pip
     - python3-setuptools
+    - python3-wheel
 
 install:
-  - pip3 install --user codespell
+  - pip3 install --user codespell proselint
 
 script:
   - codespell --ignore-words-list=que $(git ls-files -- "*.asciidoc" "*.md")
+  - mkdir -p ~/.config/proselint/ && cp .proselint.json ~/.config/proselint/config && proselint $(git ls-files -- "*.asciidoc" "*.md")
