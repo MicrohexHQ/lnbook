@@ -3,13 +3,16 @@ dist: bionic
 addons:
   apt:
     packages:
+    - npm
     - python3-pip
     - python3-setuptools
     - python3-wheel
 
 install:
   - pip3 install --user codespell proselint
+  - npm install write-good
 
 script:
   - codespell --ignore-words-list=que $(git ls-files -- "*.asciidoc" "*.md")
   - mkdir -p ~/.config/proselint/ && cp .proselint.json ~/.config/proselint/config && proselint $(git ls-files -- "*.asciidoc" "*.md")
+  - node_modules/write-good/bin/write-good.js --no-adverb --no-passive --no-tooWordy --no-weasel $(git ls-files -- "*.asciidoc" "*.md")
