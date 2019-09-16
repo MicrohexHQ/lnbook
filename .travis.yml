@@ -8,10 +8,26 @@ addons:
 
 install:
   - pip3 install --user codespell
+  - fold_start() { echo -e "travis_fold:start:$1\033[33;1m$2\033[0m"; }
+  - fold_end() { echo -e "\ntravis_fold:end:$1\r"; }
 
 script:
-  - git grep $'\r' -- "*.asciidoc" "*.md" && echo "^ Possible Windows style line ending detected. Please use Unix style line endings (\n)." && false || true
-  - git grep ' $' -- "*.asciidoc" "*.md" && echo "^ Trailing space detected at end of line. Please remove." && false || true
-  - git grep $'\t' -- "*.asciidoc" "*.md" && echo "^ Use of tabs detected. Please use space for indentation." && false || true
-  - git grep "[^ ]  [^ ]" -- "*.asciidoc" "*.md" && echo "^ Satoshi style double spacing detected. Sorry Satoshi, please use single spacing." && false || true
+  - fold_start "no-windows-line-endings"
+  - git grep $'\r' -- "*.asciidoc" "*.md" && echo "^ Possible Windows style line ending detected. Please use Unix style line endings (\n)." && exit 1 || true
+  - fold_end "no-windows-line-endings"
+
+  - fold_start "no-trailing-spaces"
+  - git grep ' $' -- "*.asciidoc" "*.md" && echo "^ Trailing space detected at end of line. Please remove." && exit 1 || true
+  - fold_end "no-trailing-spaces"
+
+  - fold_start "no-tabs"
+  - git grep $'\t' -- "*.asciidoc" "*.md" && echo "^ Use of tabs detected. Please use space for indentation." && exit 1 || true
+  - fold_end "no-tabs"
+
+  - fold_start "no-double-spacing"
+  - git grep "[^ ]  [^ ]" -- "*.asciidoc" "*.md" && echo "^ Satoshi style double spacing detected. Sorry Satoshi, please use single spacing." && exit 1 || true
+  - fold_end "no-double-spacing"
+
+  - fold_start "no-typos"
   - codespell --ignore-words-list=que $(git ls-files -- "*.asciidoc" "*.md")
+  - fold_end "no-typos"
